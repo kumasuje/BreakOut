@@ -1,5 +1,5 @@
-# BreakOut #
-Class Assignment for OOSD , Fall 2016 
+
+#Class Assignment for OOSD , Fall 2016 #
 # OOSD P532 BreakOut - Team 5 #
 
 
@@ -10,7 +10,7 @@ Steps to run the appication -
 
 1 > Build the application using maven 
 
-	## mvn clean install ##
+	# mvn clean install #
 	
 	Or
 	
@@ -18,7 +18,7 @@ Steps to run the appication -
 
 2 > A jar file will be generated , which can be trigger using below command
 
-	## java -jar <path><jar file name> ##
+	# java -jar <path><jar file name> #
 	
 	Or
 	
