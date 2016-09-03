@@ -1,5 +1,6 @@
 package p532.breakout;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.sound.sampled.*;
@@ -10,7 +11,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,6 +20,7 @@ import java.util.TimerTask;
  * are drawn. It also has the game loop and timer functionality, which are responsible
  * for updating the game objects and drawing them to the panel.
  */
+
 public class ClockPanel extends JPanel implements Commons {
 	// Variable declaration
 
@@ -26,12 +29,12 @@ public class ClockPanel extends JPanel implements Commons {
 	public int secCounter=0;
 	public int minCounter=0;
 	public int hrCounter=0;
+	
 	public ClockPanel() {
 		// Set background color
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(Commons.WIDTH, 60));
 		addTimerLabel();
-		
 		setDoubleBuffered(true);
 		// Set the focus to the GamePanel for keyboard events to work.
 		setFocusable(true);
@@ -40,14 +43,12 @@ public class ClockPanel extends JPanel implements Commons {
 	}
 
 	public void addTimerLabel() {
-		
 		label = new JLabel();
 		label.setFont(new Font("Arial", Font.BOLD, 36));
 		label.setText(" CLOCK    "+hrCounter+":"+minCounter+":"+secCounter);
 		add(label);
-
 	}
-
+    
 	public void displayTime(int msCounter) {
 		milliSecCounter += msCounter;
 		showTime();

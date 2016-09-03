@@ -3,8 +3,9 @@ package p532.breakout;
 import java.util.ArrayList;
 
 import java.util.Timer;
+import java.util.concurrent.CountDownLatch;
 
-public class TimerPerSecObservable {
+public class TimerPerSecObservable implements Runnable {
 
 	public TimerPerSecObservable(GamePanel gamePanel) {
 		super();
@@ -34,11 +35,10 @@ public class TimerPerSecObservable {
 	}
 
 	public void updateObserver() {
-
+		CountDownLatch latch = new CountDownLatch(2);
+		
 		for (Object obj : observer) {
-
 			if (obj instanceof GamePanel) {
-
 				/*
 				 * The timer object is used to schedule the game loop.
 				 * scheduleAtFixedRate() is used to execute the GameLoopTask
@@ -46,15 +46,27 @@ public class TimerPerSecObservable {
 				 * loop. The task runs at nearly 60 FPS. So 1000ms/60 = nearly
 				 * 20 ms.
 				 */
-
-				timer.scheduleAtFixedRate(new GameLogic(gamePanel), 1000, 17);
+				GameLogic gamelogic=new GameLogic(gamePanel,latch);
+				timer.schedule(gamelogic, 10);
+				//timer.scheduleAtFixedRate(new GameLogic(gamePanel), 1000, 17);
 			}
 			if (obj instanceof ClockPanel) {
-
-				timer.scheduleAtFixedRate(new ClockTimerTask(gamePanel.clockPanel), 1000, 17);
-
+				ClockTimerTask clocktimertask=new ClockTimerTask(gamePanel.clockPanel,latch);
+				timer.schedule(clocktimertask,10);
+				//timer.scheduleAtFixedRate(new ClockTimerTask(gamePanel.clockPanel), 1000, 17);
 			}
 		}
+		try {
+			latch.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void run() {
+		// TODO Auto-generated method stub
+		//updateObserver();
 	}
 
 }

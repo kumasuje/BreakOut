@@ -1,6 +1,7 @@
 package p532.breakout;
 
 import java.util.TimerTask;
+import java.util.concurrent.CountDownLatch;
 
 class GameLogic extends TimerTask {
     /* This is where the game loop logic goes. Here, the objects are
@@ -10,10 +11,10 @@ class GameLogic extends TimerTask {
      * paddle and collision handling is not included in the paint() method.
      */
 	private GamePanel gamePanel;
-	
-	public GameLogic(GamePanel gamePanel) {
+	private final CountDownLatch latch;
+	public GameLogic(GamePanel gamePanel,CountDownLatch latch) {
 		this.gamePanel = gamePanel;
-
+		this.latch=latch;
 	}
 
     @Override
@@ -34,5 +35,6 @@ class GameLogic extends TimerTask {
         // Detect and handle collisions between different objects.
         gamePanel.handleCollisions();
         gamePanel.repaint();
+        latch.countDown();
     }
  }
