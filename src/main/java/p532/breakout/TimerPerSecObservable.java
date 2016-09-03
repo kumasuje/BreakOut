@@ -3,6 +3,9 @@ package p532.breakout;
 import java.util.ArrayList;
 
 import java.util.Timer;
+import java.util.concurrent.CountDownLatch;
+
+//public class TimerPerSecObservable implements Runnable{
 
 public class TimerPerSecObservable {
 
@@ -28,13 +31,25 @@ public class TimerPerSecObservable {
 		observer.remove(index);
 	}
 
-	public void start() {
+	public void start(ArrayList<GamePanel> undoStack) {
 
-		updateObserver();
+		updateObserver(undoStack);
 	}
 
-	public void updateObserver() {
+	public void undoMove(ArrayList<GamePanel> undoStack) {
+		CountDownLatch latch = new CountDownLatch(1);
+		timer.schedule(new GameLogic(gamePanel, latch, undoStack), 00);
+		try {
+			latch.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
+	public void updateObserver(ArrayList<GamePanel> undoStack) {
+
+		CountDownLatch latch = new CountDownLatch(2);
 		for (Object obj : observer) {
 
 			if (obj instanceof GamePanel) {
@@ -45,15 +60,26 @@ public class TimerPerSecObservable {
 				 * object (extended from TimerTask) which contains the game
 				 * loop. The task runs at nearly 60 FPS. So 1000ms/60 = nearly
 				 * 20 ms.
+				 *
 				 */
+				if (!GameStatus.isGameOver() && !GameStatus.isGameStopped()) {
 
-				timer.scheduleAtFixedRate(new GameLogic(gamePanel), 1000, 17);
+					GameState currentState = new GameState(gamePanel);
+					undoStack.add(currentState.getCurentState());
+				}
+				timer.schedule(new GameLogic(gamePanel, latch, undoStack), 17);
 			}
 			if (obj instanceof ClockPanel) {
 
-				timer.scheduleAtFixedRate(new ClockTimerTask(gamePanel.clockPanel), 1000, 17);
-
+				timer.schedule(new ClockTimerTask(gamePanel.clockPanel, latch), 17);
 			}
+		}
+
+		try {
+			latch.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

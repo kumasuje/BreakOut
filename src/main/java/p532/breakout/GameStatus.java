@@ -1,15 +1,64 @@
 package p532.breakout;
 
+import java.util.ArrayList;
+
 public class GameStatus {
 
-	private static boolean statusFlag = true;
-
-	public synchronized static boolean getStatusFlag() {
-		return statusFlag;
+	public synchronized static boolean isGameOver() {
+		return gameOver;
 	}
 
-	public synchronized static void setStatusFlag(boolean statusFlag) {
-		GameStatus.statusFlag = statusFlag;
+	public synchronized static void setGameOver(boolean gameOver) {
+		GameStatus.gameOver = gameOver;
 	}
+
+	public synchronized static boolean isGameStopped() {
+		return gameStopped;
+	}
+
+	public synchronized  static void setGameStopped(boolean gameStopped) {
+		GameStatus.gameStopped = gameStopped;
+	}
+
+	public synchronized static boolean isGameStarted() {
+		return gameStarted;
+	}
+
+	public synchronized static void setGameStarted(boolean gameStarted) {
+		GameStatus.gameStarted = gameStarted;
+	}
+
+	private static boolean gameOver = false;
+	private static boolean gameStopped = false;
+	private static boolean gameStarted = false;
+	private static boolean gameReset = false;
+	private static boolean gameUndo = false;
 	
+	
+	public static synchronized boolean isGameUndo() {
+		return gameUndo;
+	}
+
+	public static synchronized void setGameUndo(boolean gameUndo) {
+		GameStatus.gameUndo = gameUndo;
+	}
+
+	public synchronized static boolean isGameReset() {
+		return gameReset;
+	}
+
+	public synchronized static void setGameReset(boolean gameReset) {
+		GameStatus.gameReset = gameReset;
+	}
+
+	private  ArrayList<GamePanel>  undoStack = new ArrayList<GamePanel>();
+
+	public  synchronized  ArrayList<GamePanel> getUndoStack() {
+		return undoStack;
+	}
+
+	public  synchronized void setUndoStack(ArrayList<GamePanel> undoStack) {
+		this.undoStack = undoStack;
+	}
+
 }

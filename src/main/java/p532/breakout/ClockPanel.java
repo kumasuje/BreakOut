@@ -2,22 +2,16 @@ package p532.breakout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.sound.sampled.*;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 /* This is the GamePanel class which extends JPanel. This is where the graphics
  * are drawn. It also has the game loop and timer functionality, which are responsible
  * for updating the game objects and drawing them to the panel.
  */
+@SuppressWarnings("serial")
 public class ClockPanel extends JPanel implements Commons {
 	// Variable declaration
 
@@ -29,7 +23,7 @@ public class ClockPanel extends JPanel implements Commons {
 	public ClockPanel() {
 		// Set background color
 		setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(Commons.WIDTH, 60));
+		setPreferredSize(new Dimension(Commons.WIDTH, Commons.CLOCK_HEIGHT));
 		addTimerLabel();
 		
 		setDoubleBuffered(true);
@@ -71,5 +65,12 @@ public class ClockPanel extends JPanel implements Commons {
 		
 	}
 
+	public void copy(ClockPanel clock){
+		
+		this.milliSecCounter = clock.milliSecCounter;
+		this.hrCounter		 = clock.hrCounter;
+		this.minCounter		 = clock.milliSecCounter;
+		this.secCounter		 = clock.secCounter;
+	}
 	
 }

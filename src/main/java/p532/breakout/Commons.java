@@ -9,6 +9,11 @@ public interface Commons {
     
 	public static final int WIDTH = 620;
     public static final int HEIGHT = 800;
+    public static final int TOP_OPTION_BAR_HEIGHT = 45;
+    public static final int VERTICAL_PADDING = 15;
+    public static final int CLOCK_HEIGHT = 60;
+
+    
     public static final String PIC_BALL = "/ball.png";
     public static final String PIC_BRICK = "/brick.png";
     public static final String PIC_PADDLE ="/paddle.png";
