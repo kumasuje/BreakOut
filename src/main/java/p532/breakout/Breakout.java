@@ -1,5 +1,6 @@
 package p532.breakout;
 
+<<<<<<< HEAD
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -8,13 +9,18 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+=======
+
+import javax.swing.JFrame;
+>>>>>>> refs/remotes/origin/master
 
 /**
- * @author sujeet & Karun
+ * @author sujeet 
  * The main window, acts as the main entry point.
  * 
  */
 
+<<<<<<< HEAD
 public class Breakout extends JFrame implements Commons , ActionListener{
 	JPanel panel;
 	JButton start;
@@ -123,5 +129,14 @@ public class Breakout extends JFrame implements Commons , ActionListener{
 	
 	public static void main(String[] args) {
 		Breakout game=new Breakout();
+=======
+@SuppressWarnings("serial")
+public class Breakout extends JFrame implements Commons {
+
+	public static void main(String[] args) {
+		
+		Driver gameDriver = new Driver();
+		gameDriver.playGame();
+>>>>>>> refs/remotes/origin/master
 	}
 }

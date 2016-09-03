@@ -78,4 +78,15 @@ public class Paddle extends Sprite implements Commons {
         if (mouseHandler == null) mouseHandler = new MouseHandler();
         return mouseHandler;
     }
+    
+    public void copy(Paddle paddle){
+    	
+    	this.dx = paddle.dx;
+    	this.dy = paddle.dy;
+    	this.height = paddle.height;
+    	this.image = paddle.image;
+    	this.width = paddle.width;
+    	this.x		= paddle.x;
+    	this.y		= paddle.y;
+    }
 }

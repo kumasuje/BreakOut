@@ -43,4 +43,16 @@ public class Ball extends Sprite implements Commons {
         x = Commons.WIDTH / 3;
         y = Commons.HEIGHT / 2;
     }
+    
+    public void copy(Ball ball){
+    	
+    	this.dx = ball.dx;
+    	this.dy = ball.dy;
+    	this.height = ball.height;
+    	this.image = ball.image;
+    	this.width = ball.width;
+    	this.x		= ball.x;
+    	this.y		= ball.y;
+    	
+    }
 }

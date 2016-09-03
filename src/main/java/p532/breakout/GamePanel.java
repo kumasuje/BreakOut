@@ -1,23 +1,25 @@
 package p532.breakout;
 
 import javax.swing.JButton;
+<<<<<<< HEAD
 import javax.swing.JLabel;
+=======
+
+>>>>>>> refs/remotes/origin/master
 import javax.swing.JPanel;
 import javax.sound.sampled.*;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.time.Clock;
-import java.util.Timer;
 import java.util.TimerTask;
 
 /* This is the GamePanel class which extends JPanel. This is where the graphics
  * are drawn. It also has the game loop and timer functionality, which are responsible
  * for updating the game objects and drawing them to the panel.
  */
+@SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Commons {
 	// Variable declaration
 	String message;
@@ -26,11 +28,31 @@ public class GamePanel extends JPanel implements Commons {
 	Brick bricks[];
 	Wall wall[];
 	int bricksRemaining;
-	long timeElpased;
-	long startTime = System.nanoTime();
+	TopOptionBar topBar;
+	
 	ClockPanel clockPanel;
+<<<<<<< HEAD
 	public GamePanel(ClockPanel clockPanel) {
 		this.clockPanel = clockPanel;
+=======
+	
+	public void resetPanel(GamePanel gamePanel){
+		
+		this.ball = gamePanel.ball;
+		this.paddle = gamePanel.paddle;
+		this.bricks = gamePanel.bricks;
+		this.wall 	= gamePanel.wall;
+		this.bricksRemaining = gamePanel.bricksRemaining;
+	}
+
+	public GamePanel(ClockPanel clockPanel, JButton startButton , JButton resetButton,JButton undoButton , JButton replayButton ) {
+
+		this.clockPanel = clockPanel;
+		this.topBar = new TopOptionBar(startButton, resetButton, undoButton, replayButton);
+		
+		
+		add(this.topBar);
+>>>>>>> refs/remotes/origin/master
 		add(this.clockPanel);
 		// Set background color
 		setBackground(new Color(200, 200, 200));
@@ -49,7 +71,7 @@ public class GamePanel extends JPanel implements Commons {
 
 		wall = new Wall[20]; // Create wall object
 		for (int i = 0; i < 20; i++) {
-			wall[i] = new Wall(i * 32, 65);
+			wall[i] = new Wall(i * 32, Commons.CLOCK_HEIGHT + Commons.TOP_OPTION_BAR_HEIGHT + 15);
 		}
 
 		// The paddle's event handlers are registered as event sources.
@@ -75,9 +97,23 @@ public class GamePanel extends JPanel implements Commons {
 
 	static void stopGame() {
 
-		GameStatus.setStatusFlag(false);
+		GameStatus.setGameOver(true);
 	}
 
+	public void copy(GamePanel nextGameState){
+		
+		this.ball.copy(nextGameState.ball);
+		for (int i = 0; i < nextGameState.bricks.length; i++) {
+
+			this.bricks[i].copy(nextGameState.bricks[i]);
+		}
+		this.bricksRemaining = nextGameState.bricksRemaining;
+		this.clockPanel.copy(nextGameState.clockPanel);
+		this.message = nextGameState.message;
+		this.paddle.copy(nextGameState.paddle);
+		
+	}
+	
 	void handleCollisions() {
 		// Handle collision with paddle.
 		/*
@@ -173,13 +209,16 @@ public class GamePanel extends JPanel implements Commons {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		// If not lost or won (still playing), draw objects.
-		if (GameStatus.getStatusFlag()) {
+		if (!GameStatus.isGameOver()) {
 			// Display the timer.
 			Font font = new Font("Arial", Font.BOLD, 12);
 
 			g2d.setColor(Color.WHITE);
 			g2d.setFont(font);
-
+			System.out.println(" 222222");
+			System.out.println(ball.getX()+" "+ball.getY()+" "+ball.getWidth()+" "+ball.getHeight());
+			
+			
 			// Draw the wall on the top portion
 			for (Wall w : wall)
 				g2d.drawImage(w.getImage(), w.getX(), w.getY(), w.getWidth(), w.getHeight(), this);

@@ -22,4 +22,16 @@ public class Brick extends Sprite implements Commons {
                 this.getClass().getResource(Commons.PIC_BRICK)).getImage());
         destroyed = false;
     }
+    
+    public void copy(Brick brick){
+    	
+    	this.dx = brick.dx;
+    	this.dy = brick.dy;
+    	this.height = brick.height;
+    	this.image = brick.image;
+    	this.destroyed = brick.destroyed;
+    	this.width = brick.width;
+    	this.x = brick.x;
+    	this.y = brick.y;
+    }
 }
