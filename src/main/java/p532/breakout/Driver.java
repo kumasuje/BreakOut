@@ -25,8 +25,9 @@ public class Driver {
 		JButton resetButton = new JButton("RESET");
 		JButton undoButton = new JButton("UNDO");
 		JButton replyButton = new JButton("REPLAY");
+		JButton pauseButton = new JButton("PAUSE");
 
-		GamePanel gamePanel = new GamePanel(new ClockPanel(), startButton, resetButton, undoButton, replyButton);
+		GamePanel gamePanel = new GamePanel(new ClockPanel(), startButton, resetButton, undoButton, replyButton, pauseButton);
 		gamePanel.setPreferredSize(new Dimension(Commons.WIDTH, Commons.HEIGHT));
 		TimerPerSecObservable timerObservable = new TimerPerSecObservable(gamePanel);
 

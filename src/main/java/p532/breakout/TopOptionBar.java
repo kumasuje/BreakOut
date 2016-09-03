@@ -35,11 +35,19 @@ public class TopOptionBar extends JPanel implements Commons{
 	public void setReplyButton(JButton replyButton) {
 		this.replayButton = replyButton;
 	}
+	public JButton getPauseButton() {
+		return pauseButton;
+	}
+	public void setPauseButton(JButton pauseButton) {
+		this.pauseButton = pauseButton;
+	}
 	JButton startButton;
 	JButton resetButton;
 	JButton undoButton;
 	JButton replayButton;
-	public TopOptionBar(JButton startButton, JButton resetButton, JButton undoButton, JButton replayButton) {
+	JButton pauseButton;
+	
+	public TopOptionBar(JButton startButton, JButton resetButton, JButton undoButton, JButton replayButton, JButton pausButton) {
 
 	super();
 		
@@ -47,6 +55,7 @@ public class TopOptionBar extends JPanel implements Commons{
 		this.resetButton = new JButton("RESET");
 		this.undoButton = new JButton("UNDO");
 		this.replayButton = new JButton("REPLAY");
+		this.pauseButton = new JButton("PAUSE");
 		
 		this.startButton.addActionListener(new ActionListener() {
 			
@@ -78,10 +87,20 @@ public class TopOptionBar extends JPanel implements Commons{
 			}
 		});
 		
+		this.pauseButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				GameStatus.setGameStopped(true);
+			}
+		});
+		
 		add(this.startButton);
 		add(this.resetButton);
 		add(this.undoButton);
 		add(this.replayButton);
+		add(this.pauseButton);
 
 		// Set background color
 		this.setOpaque(true);

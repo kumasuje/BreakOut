@@ -38,10 +38,10 @@ public class GamePanel extends JPanel implements Commons {
 		this.bricksRemaining = gamePanel.bricksRemaining;
 	}
 
-	public GamePanel(ClockPanel clockPanel, JButton startButton , JButton resetButton,JButton undoButton , JButton replayButton ) {
+	public GamePanel(ClockPanel clockPanel, JButton startButton , JButton resetButton,JButton undoButton , JButton replayButton ,JButton pauseButton) {
 
 		this.clockPanel = clockPanel;
-		this.topBar = new TopOptionBar(startButton, resetButton, undoButton, replayButton);
+		this.topBar = new TopOptionBar(startButton, resetButton, undoButton, replayButton, pauseButton);
 		
 		
 		add(this.topBar);
