@@ -33,14 +33,23 @@ public class GameStatus {
 	private static boolean gameStarted = false;
 	private static boolean gameReset = false;
 	private static boolean gameUndo = false;
+	private static boolean gameReplay = false;
 	
 	
 	public static synchronized boolean isGameUndo() {
 		return gameUndo;
 	}
+	
+	public static synchronized boolean isGameReplay() {
+		return gameReplay;
+	}
 
 	public static synchronized void setGameUndo(boolean gameUndo) {
 		GameStatus.gameUndo = gameUndo;
+	}
+	
+	public static synchronized void setGameReplay(boolean gameReplay) {
+		GameStatus.gameReplay = gameReplay;
 	}
 
 	public synchronized static boolean isGameReset() {
@@ -52,13 +61,21 @@ public class GameStatus {
 	}
 
 	private  ArrayList<GamePanel>  undoStack = new ArrayList<GamePanel>();
+	private  ArrayList<GamePanel>  replayStack = new ArrayList<GamePanel>();
 
 	public  synchronized  ArrayList<GamePanel> getUndoStack() {
 		return undoStack;
+	}
+	
+	public  synchronized  ArrayList<GamePanel> getReplayStack() {
+		return replayStack;
 	}
 
 	public  synchronized void setUndoStack(ArrayList<GamePanel> undoStack) {
 		this.undoStack = undoStack;
 	}
-
+	
+	public synchronized void setReplayStack(ArrayList<GamePanel> replayStack){
+		this.replayStack = replayStack;
+	}
 }

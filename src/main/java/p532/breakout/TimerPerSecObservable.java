@@ -28,14 +28,25 @@ public class TimerPerSecObservable implements Runnable {
 		observer.remove(index);
 	}
 
-	public void start(ArrayList<GamePanel> undoStack) {
+	public void start(ArrayList<GamePanel> undoStack, ArrayList<GamePanel> replayStack) {
 
-		updateObserver(undoStack);
+		updateObserver(undoStack, replayStack);
 	}
 
 	public void undoMove(ArrayList<GamePanel> undoStack) {
 		CountDownLatch latch = new CountDownLatch(1);
-		timer.schedule(new GameLogic(gamePanel, latch, undoStack), 00);
+		timer.schedule(new GameLogic(gamePanel, latch, undoStack, null), 00);
+		try {
+			latch.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void replayMove(ArrayList<GamePanel> replayStack) {
+		CountDownLatch latch = new CountDownLatch(1);
+		timer.schedule(new GameLogic(gamePanel, latch, null, replayStack), 17);
 		try {
 			latch.await();
 		} catch (InterruptedException e) {
@@ -44,7 +55,7 @@ public class TimerPerSecObservable implements Runnable {
 		}
 	}
 
-	public void updateObserver(ArrayList<GamePanel> undoStack) {
+	public void updateObserver(ArrayList<GamePanel> undoStack, ArrayList<GamePanel> replayStack) {
 
 		CountDownLatch latch = new CountDownLatch(2);
 		for (Object obj : observer) {
@@ -61,8 +72,9 @@ public class TimerPerSecObservable implements Runnable {
 
 					GameState currentState = new GameState(gamePanel);
 					undoStack.add(currentState.getCurentState());
+					replayStack.add(currentState.getCurentState());
 				}
-				timer.schedule(new GameLogic(gamePanel, latch, undoStack), 17);
+				timer.schedule(new GameLogic(gamePanel, latch, undoStack, replayStack), 17);
 			}
 			if (obj instanceof ClockPanel) {
 
