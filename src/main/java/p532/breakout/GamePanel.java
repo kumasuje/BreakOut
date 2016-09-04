@@ -1,7 +1,5 @@
 package p532.breakout;
 
-import javax.swing.JButton;
-
 import javax.swing.JPanel;
 import javax.sound.sampled.*;
 
@@ -38,10 +36,10 @@ public class GamePanel extends JPanel implements Commons {
 		this.bricksRemaining = gamePanel.bricksRemaining;
 	}
 
-	public GamePanel(ClockPanel clockPanel, JButton startButton , JButton resetButton,JButton undoButton , JButton replayButton ,JButton pauseButton) {
+	public GamePanel(ClockPanel clockPanel) {
 
 		this.clockPanel = clockPanel;
-		this.topBar = new TopOptionBar(startButton, resetButton, undoButton, replayButton, pauseButton);
+		this.topBar = new TopOptionBar();
 		
 		
 		add(this.topBar);
@@ -208,10 +206,7 @@ public class GamePanel extends JPanel implements Commons {
 
 			g2d.setColor(Color.WHITE);
 			g2d.setFont(font);
-			System.out.println(" 222222");
-			System.out.println(ball.getX()+" "+ball.getY()+" "+ball.getWidth()+" "+ball.getHeight());
-			
-			
+		
 			// Draw the wall on the top portion
 			for (Wall w : wall)
 				g2d.drawImage(w.getImage(), w.getX(), w.getY(), w.getWidth(), w.getHeight(), this);

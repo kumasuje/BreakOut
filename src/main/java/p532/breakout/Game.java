@@ -13,15 +13,10 @@ import javax.swing.JFrame;
 
 public class Game {
 
-	 	public Game(ArrayList<GamePanel> undoStack, JFrame gameFrame, JButton startButton, JButton resetButton,
-			JButton undoButton, JButton replyButton, TimerPerSecObservable timerObservable) {
+	 	public Game(ArrayList<GamePanel> undoStack, JFrame gameFrame, TimerPerSecObservable timerObservable) {
 		super();
 		this.undoStack = undoStack;
 		this.gameFrame = gameFrame;
-		this.startButton = startButton;
-		this.resetButton = resetButton;
-		this.undoButton = undoButton;
-		this.replyButton = replyButton;
 		this.timerObservable = timerObservable;
 	}
 
@@ -50,13 +45,14 @@ public class Game {
 			GameStatus.setGameStarted(true);
 			GameStatus.setGameStopped(false);
 			gamePanel.copy(resetPosition);
+			this.timerObservable.start(undoStack);
 		}
 		
 		public void undoGame(GamePanel gamePanel){
 			GameStatus.setGameUndo(false);
 			GameStatus.setGameStopped(false);
-			if(undoStack.size()-30>0){
-				GamePanel lastState = new GameState(undoStack.remove(undoStack.size()-30)).getCurentState();
+			if(undoStack.size()>0){
+				GamePanel lastState = new GameState(undoStack.remove(undoStack.size()-1)).getCurentState();
 				gamePanel.copy(lastState);
 				timerObservable.undoMove(undoStack);
 				try {

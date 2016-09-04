@@ -47,7 +47,7 @@ public class TopOptionBar extends JPanel implements Commons{
 	JButton replayButton;
 	JButton pauseButton;
 	
-	public TopOptionBar(JButton startButton, JButton resetButton, JButton undoButton, JButton replayButton, JButton pausButton) {
+	public TopOptionBar() {
 
 	super();
 		

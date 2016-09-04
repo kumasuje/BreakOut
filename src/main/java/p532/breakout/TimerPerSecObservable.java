@@ -1,5 +1,6 @@
 package p532.breakout;
 
+import java.nio.channels.GatheringByteChannel;
 import java.util.ArrayList;
 
 import java.util.Timer;
@@ -63,14 +64,22 @@ public class TimerPerSecObservable {
 				 *
 				 */
 				if (!GameStatus.isGameOver() && !GameStatus.isGameStopped()) {
-
-					GameState currentState = new GameState(gamePanel);
-					undoStack.add(currentState.getCurentState());
+					System.out.println("Adding "+undoStack.size());
+					if(GameStatus.getRecordStateTimer() > 59){
+						
+						GameStatus.setRecordStateTimer(0);
+						GameState currentState = new GameState(gamePanel);
+						undoStack.add(currentState.getCurentState());
+						
+					}else{
+						GameStatus.setRecordStateTimer(GameStatus.getRecordStateTimer()+1);
+					}
+					
 				}
 				timer.schedule(new GameLogic(gamePanel, latch, undoStack), 17);
 			}
 			if (obj instanceof ClockPanel) {
-
+				
 				timer.schedule(new ClockTimerTask(gamePanel.clockPanel, latch), 17);
 			}
 		}

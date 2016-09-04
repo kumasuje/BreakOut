@@ -1,37 +1,31 @@
 package p532.breakout;
 
 import java.awt.Dimension;
+
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 
 
 /**
  * @author sujeet 
- * The main window, acts as the main entry point.
+ * This class acts as Driver class and trigger appropriate command with button clicked
  * 
  */
 
 public class Driver {
 
-	public void playGame() {
+	public void startGame() {
 
 		ArrayList<GamePanel> undoStack = new ArrayList<GamePanel>();
 		JFrame gameFrame = new JFrame("Demo ");
 
-		JButton startButton = new JButton("START");
-		JButton resetButton = new JButton("RESET");
-		JButton undoButton = new JButton("UNDO");
-		JButton replyButton = new JButton("REPLAY");
-		JButton pauseButton = new JButton("PAUSE");
-
-		GamePanel gamePanel = new GamePanel(new ClockPanel(), startButton, resetButton, undoButton, replyButton, pauseButton);
+		GamePanel gamePanel = new GamePanel(new ClockPanel());
 		gamePanel.setPreferredSize(new Dimension(Commons.WIDTH, Commons.HEIGHT));
 		TimerPerSecObservable timerObservable = new TimerPerSecObservable(gamePanel);
 
-		Game game = new Game(undoStack, gameFrame, startButton, resetButton, undoButton, replyButton, timerObservable);
+		Game game = new Game(undoStack, gameFrame, timerObservable);
 		game.register(gamePanel);
 		FlowLayout layout = new FlowLayout();
 		layout.setHgap(10);
@@ -49,15 +43,14 @@ public class Driver {
 		gameScreen.performAMove();
 		while (!GameStatus.isGameOver()) {
 
-			System.out.println(" Game not Over");
 			if (GameStatus.isGameStarted() && !GameStatus.isGameStopped()) {
 				StartCommand newStartCommand = new StartCommand(game);
 				newStartCommand.performAMove();
 
 			} else if (GameStatus.isGameReset() && GameStatus.isGameStopped()) {
 
-				ResetCommand newRestCommand = new ResetCommand(game, gamePanel, resetPosition);
-				newRestCommand.performAMove();
+				ResetCommand newResetCommand = new ResetCommand(game, gamePanel, resetPosition);
+				newResetCommand.performAMove();
 
 			} else if (GameStatus.isGameStopped() && GameStatus.isGameUndo()) {
 

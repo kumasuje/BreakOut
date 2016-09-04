@@ -34,7 +34,17 @@ public class GameStatus {
 	private static boolean gameReset = false;
 	private static boolean gameUndo = false;
 	
+	private static int recordStateTimer = 0;
 	
+	
+	public static synchronized int getRecordStateTimer() {
+		return recordStateTimer;
+	}
+
+	public static synchronized void setRecordStateTimer(int recordStateTimer) {
+		GameStatus.recordStateTimer = recordStateTimer;
+	}
+
 	public static synchronized boolean isGameUndo() {
 		return gameUndo;
 	}

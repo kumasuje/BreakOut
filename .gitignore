@@ -23,6 +23,9 @@ libs
 # Classpath
 .classpath
 
+#.DS_Store
+.DS_Store
+
 # Config properties
 config.properties
 
