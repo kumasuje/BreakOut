@@ -14,8 +14,7 @@ public class GameState {
 
 	public GameState(GamePanel curentState) {
 		super();
-		this.curentState = new GamePanel(new ClockPanel(), curentState.topBar.startButton,
-				curentState.topBar.resetButton, curentState.topBar.undoButton, curentState.topBar.replayButton, curentState.topBar.pauseButton);
+		this.curentState = new GamePanel(new ClockPanel());
 		
 		this.curentState.ball.copy(curentState.ball);
 		for (int i = 0; i < this.curentState.bricks.length; i++) {
