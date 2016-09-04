@@ -19,13 +19,15 @@ public class Driver {
 	public void startGame() {
 
 		ArrayList<GamePanel> undoStack = new ArrayList<GamePanel>();
+		ArrayList<GamePanel> replayStack = new ArrayList<GamePanel>();
 		JFrame gameFrame = new JFrame("Demo ");
 
 		GamePanel gamePanel = new GamePanel(new ClockPanel());
 		gamePanel.setPreferredSize(new Dimension(Commons.WIDTH, Commons.HEIGHT));
 		TimerPerSecObservable timerObservable = new TimerPerSecObservable(gamePanel);
 
-		Game game = new Game(undoStack, gameFrame, timerObservable);
+		Game game = new Game(undoStack, replayStack,gameFrame, timerObservable);
+
 		game.register(gamePanel);
 		FlowLayout layout = new FlowLayout();
 		layout.setHgap(10);
@@ -56,6 +58,11 @@ public class Driver {
 
 				UndoCommand newUndoComment = new UndoCommand(game, gamePanel);
 				newUndoComment.performAMove();
+				
+			} else if (GameStatus.isGameStopped() && GameStatus.isGameReplay()){
+				
+				ReplayCommand newreplayComment = new ReplayCommand(game,gamePanel);
+				newreplayComment.performAMove();
 			}
 
 		}

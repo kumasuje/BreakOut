@@ -96,6 +96,15 @@ public class TopOptionBar extends JPanel implements Commons{
 			}
 		});
 		
+		this.replayButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				GameStatus.setGameStopped(true);
+				GameStatus.setGameReplay(true);
+			}
+		});
+		
 		add(this.startButton);
 		add(this.resetButton);
 		add(this.undoButton);

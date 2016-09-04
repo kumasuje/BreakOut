@@ -2,7 +2,6 @@ package p532.breakout;
 
 import javax.swing.JPanel;
 import javax.sound.sampled.*;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -44,7 +43,6 @@ public class GamePanel extends JPanel implements Commons {
 		
 		add(this.topBar);
 		add(this.clockPanel);
-
 		// Set background color
 		setBackground(new Color(200, 200, 200));
 
@@ -68,7 +66,7 @@ public class GamePanel extends JPanel implements Commons {
 		// The paddle's event handlers are registered as event sources.
 		addKeyListener(paddle.getKeyHandler());
 		addMouseMotionListener(paddle.getMouseHandler());
-
+        
 		/*
 		 * Create bricks and arrange them. Normally, the arrangement of the
 		 * bricks is done with the help of a level editor. The level editor
@@ -86,7 +84,7 @@ public class GamePanel extends JPanel implements Commons {
 		}
 	}
 
-	void stopGame() {
+	static void stopGame() {
 
 		GameStatus.setGameOver(true);
 	}
@@ -236,7 +234,7 @@ public class GamePanel extends JPanel implements Commons {
 			g2d.drawString(message, Commons.WIDTH / 2 - this.getFontMetrics(font).stringWidth(message) / 2,
 					Commons.HEIGHT / 2);
 		}
-
+        
 		/*
 		 * Since g2d was not obtained by the system but created by the coder, it
 		 * should be disposed. g on the other hand will be taken care of by the

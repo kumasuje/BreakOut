@@ -1,13 +1,14 @@
 package p532.breakout;
 
-
 import javax.swing.JFrame;
+
 
 /**
  * @author sujeet 
  * The main window, acts as the main entry point.
  * 
  */
+
 
 @SuppressWarnings("serial")
 public class Breakout extends JFrame implements Commons {

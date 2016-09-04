@@ -13,14 +13,17 @@ import javax.swing.JFrame;
 
 public class Game {
 
-	 	public Game(ArrayList<GamePanel> undoStack, JFrame gameFrame, TimerPerSecObservable timerObservable) {
+	 	public Game(ArrayList<GamePanel> undoStack, ArrayList<GamePanel> replayStack, JFrame gameFrame, TimerPerSecObservable timerObservable) {
+
 		super();
 		this.undoStack = undoStack;
+		this.replayStack = replayStack;
 		this.gameFrame = gameFrame;
 		this.timerObservable = timerObservable;
 	}
 
 		ArrayList<GamePanel>  undoStack;
+		ArrayList<GamePanel>  replayStack;
 		JFrame gameFrame;
 		
 		JButton startButton;
@@ -37,7 +40,7 @@ public class Game {
 		
 		public void startGame(){
 			
-			this.timerObservable.start(undoStack);
+			this.timerObservable.start(undoStack,replayStack);
 		}
 
 		public void resetGame(GamePanel gamePanel, GamePanel resetPosition){
@@ -45,7 +48,7 @@ public class Game {
 			GameStatus.setGameStarted(true);
 			GameStatus.setGameStopped(false);
 			gamePanel.copy(resetPosition);
-			this.timerObservable.start(undoStack);
+			this.timerObservable.start(undoStack,replayStack);
 		}
 		
 		public void undoGame(GamePanel gamePanel){
@@ -61,6 +64,16 @@ public class Game {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			}
+		}
+		
+		public void replayGame(GamePanel gamePanel){
+			GameStatus.setGameReplay(false);
+			GameStatus.setGameStopped(false);
+			for (int i = 0 ; i < replayStack.size(); i++) {
+				GamePanel lastState = new GameState(replayStack.get(i)).getCurentState();
+				gamePanel.copy(lastState);
+				timerObservable.replayMove(replayStack);
 			}
 		}
 }

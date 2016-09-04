@@ -1,6 +1,7 @@
 package p532.breakout;
 
 import java.util.TimerTask;
+import java.util.concurrent.CountDownLatch;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -12,6 +13,7 @@ public class ClockTimerTask extends TimerTask {
 		super();
 		this.clockPanel = clockPanel;
 		this.latch      = latch;
+
 	}
 
 	@Override

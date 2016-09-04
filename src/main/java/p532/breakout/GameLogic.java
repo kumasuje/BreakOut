@@ -13,6 +13,7 @@ class GameLogic extends TimerTask {
      */
 	private GamePanel gamePanel;
 	private  ArrayList<GamePanel>  undoStack;
+	private  ArrayList<GamePanel> replayStack;
 	private final CountDownLatch latch;
 	public GamePanel getGamePanel() {
 		return gamePanel;
@@ -22,13 +23,13 @@ class GameLogic extends TimerTask {
 		this.gamePanel = gamePanel;
 	}
 
-	public GameLogic(GamePanel gamePanel,CountDownLatch latch, ArrayList<GamePanel>  undoStack) {
+	public GameLogic(GamePanel gamePanel,CountDownLatch latch, ArrayList<GamePanel>  undoStack, ArrayList<GamePanel> replayStack) {
 		
 		//
 		this.gamePanel = gamePanel;
 		this.latch = latch;
 		this.undoStack=undoStack;
-
+		this.replayStack = replayStack;
 	}
 	
 	//public GameLogic(){}
@@ -64,6 +65,7 @@ class GameLogic extends TimerTask {
         	gamePanel.stopGame();
         }
         // Detect and handle collisions between different objects.
+
 //        if(GameStatus.getStatusFlag()){
 
             gamePanel.handleCollisions();
@@ -72,6 +74,7 @@ class GameLogic extends TimerTask {
 //        	
 //        	GameStatus.something();
 //        }
+
         latch.countDown();
     }
  }

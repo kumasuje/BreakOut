@@ -5,10 +5,7 @@ import java.util.ArrayList;
 
 import java.util.Timer;
 import java.util.concurrent.CountDownLatch;
-
-//public class TimerPerSecObservable implements Runnable{
-
-public class TimerPerSecObservable {
+public class TimerPerSecObservable implements Runnable {
 
 	public TimerPerSecObservable(GamePanel gamePanel) {
 		super();
@@ -32,14 +29,25 @@ public class TimerPerSecObservable {
 		observer.remove(index);
 	}
 
-	public void start(ArrayList<GamePanel> undoStack) {
+	public void start(ArrayList<GamePanel> undoStack, ArrayList<GamePanel> replayStack) {
 
-		updateObserver(undoStack);
+		updateObserver(undoStack, replayStack);
 	}
 
 	public void undoMove(ArrayList<GamePanel> undoStack) {
 		CountDownLatch latch = new CountDownLatch(1);
-		timer.schedule(new GameLogic(gamePanel, latch, undoStack), 00);
+		timer.schedule(new GameLogic(gamePanel, latch, undoStack, null), 00);
+		try {
+			latch.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void replayMove(ArrayList<GamePanel> replayStack) {
+		CountDownLatch latch = new CountDownLatch(1);
+		timer.schedule(new GameLogic(gamePanel, latch, null, replayStack), 17);
 		try {
 			latch.await();
 		} catch (InterruptedException e) {
@@ -48,13 +56,11 @@ public class TimerPerSecObservable {
 		}
 	}
 
-	public void updateObserver(ArrayList<GamePanel> undoStack) {
+	public void updateObserver(ArrayList<GamePanel> undoStack, ArrayList<GamePanel> replayStack) {
 
 		CountDownLatch latch = new CountDownLatch(2);
 		for (Object obj : observer) {
-
 			if (obj instanceof GamePanel) {
-
 				/*
 				 * The timer object is used to schedule the game loop.
 				 * scheduleAtFixedRate() is used to execute the GameLoopTask
@@ -64,19 +70,22 @@ public class TimerPerSecObservable {
 				 *
 				 */
 				if (!GameStatus.isGameOver() && !GameStatus.isGameStopped()) {
-					System.out.println("Adding "+undoStack.size());
+
+
+					GameState currentState = new GameState(gamePanel);
+					
 					if(GameStatus.getRecordStateTimer() > 59){
 						
 						GameStatus.setRecordStateTimer(0);
-						GameState currentState = new GameState(gamePanel);
 						undoStack.add(currentState.getCurentState());
 						
 					}else{
 						GameStatus.setRecordStateTimer(GameStatus.getRecordStateTimer()+1);
 					}
-					
-				}
-				timer.schedule(new GameLogic(gamePanel, latch, undoStack), 17);
+					replayStack.add(currentState.getCurentState());
+
+				timer.schedule(new GameLogic(gamePanel, latch, undoStack, replayStack), 17);
+			}
 			}
 			if (obj instanceof ClockPanel) {
 				
@@ -90,6 +99,11 @@ public class TimerPerSecObservable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void run() {
+		// TODO Auto-generated method stub
+		//updateObserver();
 	}
 
 }
