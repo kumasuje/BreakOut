@@ -4,12 +4,6 @@ import java.util.ArrayList;
 
 import java.util.Timer;
 import java.util.concurrent.CountDownLatch;
-<<<<<<< HEAD
-=======
-
-//public class TimerPerSecObservable implements Runnable{
->>>>>>> refs/remotes/origin/master
-
 public class TimerPerSecObservable implements Runnable {
 
 	public TimerPerSecObservable(GamePanel gamePanel) {
@@ -50,15 +44,9 @@ public class TimerPerSecObservable implements Runnable {
 		}
 	}
 
-<<<<<<< HEAD
-	public void updateObserver() {
-		CountDownLatch latch = new CountDownLatch(2);
-		
-=======
 	public void updateObserver(ArrayList<GamePanel> undoStack) {
 
 		CountDownLatch latch = new CountDownLatch(2);
->>>>>>> refs/remotes/origin/master
 		for (Object obj : observer) {
 			if (obj instanceof GamePanel) {
 				/*
@@ -69,18 +57,6 @@ public class TimerPerSecObservable implements Runnable {
 				 * 20 ms.
 				 *
 				 */
-<<<<<<< HEAD
-				GameLogic gamelogic=new GameLogic(gamePanel,latch);
-				timer.schedule(gamelogic, 10);
-				//timer.scheduleAtFixedRate(new GameLogic(gamePanel), 1000, 17);
-			}
-			if (obj instanceof ClockPanel) {
-				ClockTimerTask clocktimertask=new ClockTimerTask(gamePanel.clockPanel,latch);
-				timer.schedule(clocktimertask,10);
-				//timer.scheduleAtFixedRate(new ClockTimerTask(gamePanel.clockPanel), 1000, 17);
-			}
-		}
-=======
 				if (!GameStatus.isGameOver() && !GameStatus.isGameStopped()) {
 
 					GameState currentState = new GameState(gamePanel);
@@ -94,21 +70,17 @@ public class TimerPerSecObservable implements Runnable {
 			}
 		}
 
->>>>>>> refs/remotes/origin/master
 		try {
 			latch.await();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-<<<<<<< HEAD
 	}
 
 	public void run() {
 		// TODO Auto-generated method stub
 		//updateObserver();
-=======
->>>>>>> refs/remotes/origin/master
 	}
 
 }

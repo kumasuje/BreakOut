@@ -1,11 +1,6 @@
 package p532.breakout;
 
 import javax.swing.JButton;
-<<<<<<< HEAD
-import javax.swing.JLabel;
-=======
-
->>>>>>> refs/remotes/origin/master
 import javax.swing.JPanel;
 import javax.sound.sampled.*;
 import java.awt.Color;
@@ -31,10 +26,6 @@ public class GamePanel extends JPanel implements Commons {
 	TopOptionBar topBar;
 	
 	ClockPanel clockPanel;
-<<<<<<< HEAD
-	public GamePanel(ClockPanel clockPanel) {
-		this.clockPanel = clockPanel;
-=======
 	
 	public void resetPanel(GamePanel gamePanel){
 		
@@ -52,7 +43,6 @@ public class GamePanel extends JPanel implements Commons {
 		
 		
 		add(this.topBar);
->>>>>>> refs/remotes/origin/master
 		add(this.clockPanel);
 		// Set background color
 		setBackground(new Color(200, 200, 200));

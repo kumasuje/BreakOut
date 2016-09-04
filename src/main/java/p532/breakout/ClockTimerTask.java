@@ -12,22 +12,14 @@ public class ClockTimerTask extends TimerTask {
 	public ClockTimerTask(ClockPanel clockPanel,CountDownLatch latch) {
 		super();
 		this.clockPanel = clockPanel;
-<<<<<<< HEAD
-		this.latch=latch;
-=======
 		this.latch      = latch;
->>>>>>> refs/remotes/origin/master
+
 	}
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-<<<<<<< HEAD
-		
-		if(GameStatus.getStatusFlag()){
-=======
 		if(!GameStatus.isGameOver()){
->>>>>>> refs/remotes/origin/master
 		clockPanel.displayTime(20);
 		}else{
 			

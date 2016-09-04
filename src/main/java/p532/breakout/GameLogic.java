@@ -12,12 +12,6 @@ class GameLogic extends TimerTask {
      * paddle and collision handling is not included in the paint() method.
      */
 	private GamePanel gamePanel;
-<<<<<<< HEAD
-	private final CountDownLatch latch;
-	public GameLogic(GamePanel gamePanel,CountDownLatch latch) {
-		this.gamePanel = gamePanel;
-		this.latch=latch;
-=======
 	private  ArrayList<GamePanel>  undoStack;
 	private final CountDownLatch latch;
 	public GamePanel getGamePanel() {
@@ -26,7 +20,6 @@ class GameLogic extends TimerTask {
 
 	public void setGamePanel(GamePanel gamePanel) {
 		this.gamePanel = gamePanel;
->>>>>>> refs/remotes/origin/master
 	}
 
 	public GameLogic(GamePanel gamePanel,CountDownLatch latch, ArrayList<GamePanel>  undoStack) {
@@ -71,10 +64,7 @@ class GameLogic extends TimerTask {
         	gamePanel.stopGame();
         }
         // Detect and handle collisions between different objects.
-<<<<<<< HEAD
-        gamePanel.handleCollisions();
-        gamePanel.repaint();
-=======
+
 //        if(GameStatus.getStatusFlag()){
 
             gamePanel.handleCollisions();
@@ -83,7 +73,7 @@ class GameLogic extends TimerTask {
 //        	
 //        	GameStatus.something();
 //        }
->>>>>>> refs/remotes/origin/master
+
         latch.countDown();
     }
  }
