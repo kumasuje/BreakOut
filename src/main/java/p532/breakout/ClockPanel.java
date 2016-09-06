@@ -71,7 +71,7 @@ public class ClockPanel extends JPanel implements Commons {
 		
 		this.milliSecCounter = clock.milliSecCounter;
 		this.hrCounter		 = clock.hrCounter;
-		this.minCounter		 = clock.milliSecCounter;
+		this.minCounter		 = clock.minCounter;
 		this.secCounter		 = clock.secCounter;
 	}
 	

@@ -16,6 +16,6 @@ public class Breakout extends JFrame implements Commons {
 	public static void main(String[] args) {
 		
 		Driver gameDriver = new Driver();
-		gameDriver.playGame();
+		gameDriver.startGame();
 	}
 }
