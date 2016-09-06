@@ -36,20 +36,7 @@ class GameLogic extends TimerTask {
 	
     @Override
     public void run() {
-    	
-//    	if(GameStatus.getStatusFlag()){
-//    		
-////    		GameStatus.getUndoStack().add(gamePanel);
-////    		ArrayList<GamePanel> some = GameStatus.getUndoStack();
-////    		System.out.println("adding");
-////    		System.out.println(gamePanel.ball.getX()+" "+gamePanel.ball.getY()+" "+gamePanel.ball.getWidth()+" "+gamePanel.ball.getHeight());
-//
-//    	//	undoStack.add(gamePanel);
-//    		
-//    	}else{
-//    		
-//    		System.out.println();
-//    	}
+
     	
     	gamePanel.ball.move(); // Update ball's position.
     	gamePanel.paddle.move(); // Update the paddle's position.

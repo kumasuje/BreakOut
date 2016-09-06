@@ -100,8 +100,9 @@ public class TopOptionBar extends JPanel implements Commons{
 			
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				GameStatus.setGameStopped(true);
+
 				GameStatus.setGameReplay(true);
+				
 			}
 		});
 		

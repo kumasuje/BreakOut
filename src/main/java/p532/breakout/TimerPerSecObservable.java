@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import java.util.Timer;
 import java.util.concurrent.CountDownLatch;
+
 public class TimerPerSecObservable implements Runnable {
 
 	public TimerPerSecObservable(GamePanel gamePanel) {
@@ -44,10 +45,11 @@ public class TimerPerSecObservable implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void replayMove(ArrayList<GamePanel> replayStack) {
-		CountDownLatch latch = new CountDownLatch(1);
+		CountDownLatch latch = new CountDownLatch(2);
 		timer.schedule(new GameLogic(gamePanel, latch, null, replayStack), 17);
+		timer.schedule(new ClockTimerTask(gamePanel.clockPanel, latch), 17);
 		try {
 			latch.await();
 		} catch (InterruptedException e) {
@@ -71,24 +73,22 @@ public class TimerPerSecObservable implements Runnable {
 				 */
 				if (!GameStatus.isGameOver() && !GameStatus.isGameStopped()) {
 
-
 					GameState currentState = new GameState(gamePanel);
-					
-					if(GameStatus.getRecordStateTimer() > 59){
-						
+
+					if (GameStatus.getRecordStateTimer() > 59) {
+
 						GameStatus.setRecordStateTimer(0);
 						undoStack.add(currentState.getCurentState());
-						
-					}else{
-						GameStatus.setRecordStateTimer(GameStatus.getRecordStateTimer()+1);
+
+					} else {
+						GameStatus.setRecordStateTimer(GameStatus.getRecordStateTimer() + 1);
 					}
 					replayStack.add(currentState.getCurentState());
-
+				}
 				timer.schedule(new GameLogic(gamePanel, latch, undoStack, replayStack), 17);
 			}
-			}
 			if (obj instanceof ClockPanel) {
-				
+
 				timer.schedule(new ClockTimerTask(gamePanel.clockPanel, latch), 17);
 			}
 		}
@@ -103,7 +103,7 @@ public class TimerPerSecObservable implements Runnable {
 
 	public void run() {
 		// TODO Auto-generated method stub
-		//updateObserver();
+		// updateObserver();
 	}
 
 }

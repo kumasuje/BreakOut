@@ -198,8 +198,11 @@ public class GamePanel extends JPanel implements Commons {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		// If not lost or won (still playing), draw objects.
-		if (!GameStatus.isGameOver()) {
-			// Display the timer.
+		//if ((!GameStatus.isExitGame() && !GameStatus.isGameOver()) || (!GameStatus.isExitGame() && GameStatus.isGameReplay())) {
+			
+		if(!GameStatus.isGameOver() || GameStatus.isGameReplay() ){
+		// Display the timer.
+		
 			Font font = new Font("Arial", Font.BOLD, 12);
 
 			g2d.setColor(Color.WHITE);
@@ -226,9 +229,9 @@ public class GamePanel extends JPanel implements Commons {
 			}
 		}
 		// If won or lost, display the message instead of the objects.
-		else {
+		else  if(GameStatus.isGameOver() && !GameStatus.isGameReplay()){
+			
 			Font font = new Font("Arial", Font.ITALIC, 20);
-
 			g2d.setColor(Color.WHITE);
 			g2d.setFont(font);
 			g2d.drawString(message, Commons.WIDTH / 2 - this.getFontMetrics(font).stringWidth(message) / 2,

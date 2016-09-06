@@ -43,8 +43,8 @@ public class Driver {
 		GamePanel resetPosition = new GameState(gamePanel).getCurentState();
 		StartCommand gameScreen = new StartCommand(game);
 		gameScreen.performAMove();
-		while (!GameStatus.isGameOver()) {
-
+		while ( true) {
+		
 			if (GameStatus.isGameStarted() && !GameStatus.isGameStopped()) {
 				StartCommand newStartCommand = new StartCommand(game);
 				newStartCommand.performAMove();
@@ -59,12 +59,11 @@ public class Driver {
 				UndoCommand newUndoComment = new UndoCommand(game, gamePanel);
 				newUndoComment.performAMove();
 				
-			} else if (GameStatus.isGameStopped() && GameStatus.isGameReplay()){
-				
+			}  if (GameStatus.isGameReplay()){
+								
 				ReplayCommand newreplayComment = new ReplayCommand(game,gamePanel);
 				newreplayComment.performAMove();
 			}
-
 		}
 	}
 }

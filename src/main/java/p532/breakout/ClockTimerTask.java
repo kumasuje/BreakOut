@@ -20,6 +20,7 @@ public class ClockTimerTask extends TimerTask {
 	public void run() {
 		// TODO Auto-generated method stub
 		if(!GameStatus.isGameOver()){
+			System.out.println(this.clockPanel.hrCounter+" "+this.clockPanel.minCounter+" "+this.clockPanel.secCounter);
 		clockPanel.displayTime(20);
 		}else{
 			

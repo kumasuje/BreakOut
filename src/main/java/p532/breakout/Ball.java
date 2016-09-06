@@ -33,8 +33,8 @@ public class Ball extends Sprite implements Commons {
             x = Commons.WIDTH-width;
             dx = -dx; // Reverse the horizontal direction.
         }
-        if (y <= 94) {
-            y = 94;
+        if (y <= 154) {
+            y = 154;
             dy = -dy; // Reverse the vertical direction.
         }
     }

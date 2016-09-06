@@ -34,6 +34,15 @@ public class GameStatus {
 	private static boolean gameReset = false;
 	private static boolean gameUndo = false;
 	private static boolean gameReplay = false;
+	public static synchronized boolean isExitGame() {
+		return exitGame;
+	}
+
+	public static synchronized void setExitGame(boolean exitGame) {
+		GameStatus.exitGame = exitGame;
+	}
+
+	private static boolean exitGame = false;
 	
 	private static int recordStateTimer = 0;
 	
