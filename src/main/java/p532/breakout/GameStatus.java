@@ -7,11 +7,32 @@ public class GameStatus {
 	public synchronized static boolean isGameOver() {
 		return gameOver;
 	}
+	
+	public synchronized static boolean isGamePaused() {
+		return gamePaused;
+	}
+	public synchronized static boolean isFlowLayout() {
+		return gameFlowLayout;
+	}
+	public synchronized static boolean isBorderLayout() {
+		return gameBorderLayout;
+	}
 
 	public synchronized static void setGameOver(boolean gameOver) {
 		GameStatus.gameOver = gameOver;
 	}
-
+	
+	public synchronized static void setGamePaused(boolean gamePaused) {
+		GameStatus.gamePaused = gamePaused;
+	}
+	public synchronized static void setFlowLayout(boolean gameFlowLayout) {
+		GameStatus.gameFlowLayout = gameFlowLayout;
+		GameStatus.gameBorderLayout = !gameFlowLayout;
+	}
+	public synchronized static void setBorderLayout(boolean gameBorderLayout) {
+		GameStatus.gameBorderLayout = gameBorderLayout;
+		GameStatus.gameFlowLayout = !gameBorderLayout;
+	}
 	public synchronized static boolean isGameStopped() {
 		return gameStopped;
 	}
@@ -29,11 +50,15 @@ public class GameStatus {
 	}
 
 	private static boolean gameOver = false;
+	private static boolean gamePaused = false;
 	private static boolean gameStopped = false;
 	private static boolean gameStarted = false;
 	private static boolean gameReset = false;
 	private static boolean gameUndo = false;
 	private static boolean gameReplay = false;
+	private static boolean gameFlowLayout = true;
+	private static boolean gameBorderLayout = false;
+	
 	public static synchronized boolean isExitGame() {
 		return exitGame;
 	}

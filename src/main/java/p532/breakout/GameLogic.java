@@ -37,10 +37,10 @@ class GameLogic extends TimerTask {
     @Override
     public void run() {
 
-    	
-    	gamePanel.ball.move(); // Update ball's position.
+    	if(GameStatus.isGamePaused()==false){
+    		gamePanel.ball.move(); // Update ball's position.
     	gamePanel.paddle.move(); // Update the paddle's position.
-        
+    	}
         // If ball goes below screen, lose game.
         if (gamePanel.ball.getY() > Commons.HEIGHT) {
         	gamePanel.message = "Game Over";
@@ -56,12 +56,15 @@ class GameLogic extends TimerTask {
 //        if(GameStatus.getStatusFlag()){
 
             gamePanel.handleCollisions();
-            gamePanel.repaint();
+            if(GameStatus.isGamePaused() == false)
+            	gamePanel.repaint();
 //        }else{
 //        	
 //        	GameStatus.something();
 //        }
 
         latch.countDown();
+    	
+    	
     }
  }

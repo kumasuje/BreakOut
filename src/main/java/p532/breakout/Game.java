@@ -47,6 +47,7 @@ public class Game {
 		GameStatus.setGameReset(false);
 		GameStatus.setGameStarted(true);
 		GameStatus.setGameStopped(false);
+		GameStatus.setGamePaused(false);
 		gamePanel.copy(resetPosition);
 		this.timerObservable.start(undoStack, replayStack);
 	}
@@ -65,6 +66,7 @@ public class Game {
 				e.printStackTrace();
 			}
 		}
+		
 	}
 
 	public void replayGame(GamePanel gamePanel) {

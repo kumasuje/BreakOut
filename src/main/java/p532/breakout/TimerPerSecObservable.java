@@ -20,7 +20,7 @@ public class TimerPerSecObservable implements Runnable {
 
 	public void registerObservers(Object obj) {
 
-		System.out.println(" Register");
+//		System.out.println(" Register");
 		observer.add(obj);
 	}
 
@@ -42,7 +42,7 @@ public class TimerPerSecObservable implements Runnable {
 			latch.await();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 
@@ -54,7 +54,7 @@ public class TimerPerSecObservable implements Runnable {
 			latch.await();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 
@@ -71,7 +71,7 @@ public class TimerPerSecObservable implements Runnable {
 				 * 20 ms.
 				 *
 				 */
-				if (!GameStatus.isGameOver() && !GameStatus.isGameStopped()) {
+				if (!GameStatus.isGameOver() && !GameStatus.isGameStopped() && !GameStatus.isGamePaused()) {
 
 					GameState currentState = new GameState(gamePanel);
 

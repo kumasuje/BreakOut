@@ -258,7 +258,8 @@ public class GamePanel extends JPanel implements Commons {
 		 */
 		@Override
 		public void run() {
-			ball.move(); // Update ball's position.
+			if(GameStatus.isGamePaused()==false){
+				ball.move(); // Update ball's position.
 			paddle.move(); // Update the paddle's position.
 
 			// If ball goes below screen, lose game.
@@ -275,6 +276,8 @@ public class GamePanel extends JPanel implements Commons {
 			handleCollisions();
 			// Render objects to panel.
 			repaint();
+			}
+			
 		}
 	}
 
