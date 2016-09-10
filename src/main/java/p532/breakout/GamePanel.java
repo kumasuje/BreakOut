@@ -1,11 +1,16 @@
 package p532.breakout;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.sound.sampled.*;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.RenderingHints;
 import java.util.TimerTask;
 
@@ -16,15 +21,24 @@ import java.util.TimerTask;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Commons {
 	// Variable declaration
+	
 	String message;
 	Ball ball;
 	Paddle paddle;
 	Brick bricks[];
 	Wall wall[];
 	int bricksRemaining;
-	TopOptionBar topBar;
+	StartButton startButton;
+	ResetButton resetButton;
+	UndoButton undoButton;
+	PauseButton pauseButton;
+	ReplayButton replayButton;
+	LoadButton loadButton;
+	SaveButton saveButton;
+	ChangeLayoutButton changeLayoutButton;
 	
 	ClockPanel clockPanel;
+	
 	
 	public void resetPanel(GamePanel gamePanel){
 		
@@ -33,25 +47,89 @@ public class GamePanel extends JPanel implements Commons {
 		this.bricks = gamePanel.bricks;
 		this.wall 	= gamePanel.wall;
 		this.bricksRemaining = gamePanel.bricksRemaining;
+		
+			
 	}
-
+	
 	public GamePanel(ClockPanel clockPanel) {
-
 		this.clockPanel = clockPanel;
-		this.topBar = new TopOptionBar();
-		
-		
-		add(this.topBar);
+	//	add(Driver.changeLayoutButton);
 		add(this.clockPanel);
-		// Set background color
-		setBackground(new Color(200, 200, 200));
 
-		// Enable double buffering of this panel to avoid flickering.
-		setDoubleBuffered(true);
-		// Set the focus to the GamePanel for keyboard events to work.
-		setFocusable(true);
-		// Start up the game
-		initGame();
+		// Set background color
+				setBackground(new Color(200, 200, 200));
+
+				// Enable double buffering of this panel to avoid flickering.
+				setDoubleBuffered(true);
+				// Set the focus to the GamePanel for keyboard events to work.
+				setFocusable(true);
+				// Start up the game
+				initGame();
+		
+		
+
+//		this.clockPanel = clockPanel;
+//		this.startButton = new StartButton();
+//		this.resetButton = new ResetButton();
+//		this.undoButton = new UndoButton();
+//		this.pauseButton= new PauseButton();
+//		this.replayButton = new ReplayButton();
+//		this.loadButton = new LoadButton();
+//		this.saveButton = new SaveButton();
+//		this.changeLayoutButton = new ChangeLayoutButton();
+//		
+//		
+//		if(GameStatus.isFlowLayout())
+//		{	
+//			
+//			add(this.clockPanel);
+//			add(this.startButton);
+//			add(this.resetButton);		
+//			add(this.undoButton);
+//			add(this.replayButton);
+//			add(this.pauseButton);
+//			add(this.loadButton);
+//			add(this.saveButton);
+//			add(this.changeLayoutButton);
+//			this.revalidate();
+//			this.repaint();
+//			
+//		}
+//		else{
+//			
+//			
+//			JPanel leftPanel =new JPanel(new GridLayout(0,1));
+//			JPanel rightPanel =new JPanel(new GridLayout(0,1));
+//			leftPanel.add(startButton);
+//			leftPanel.add(pauseButton);
+//			leftPanel.add(resetButton);
+//			rightPanel.add(loadButton);
+//			rightPanel.add(saveButton);
+//			rightPanel.add(undoButton);
+//			rightPanel.add(replayButton);
+//			
+//			Container pane= Driver.gameFrame.getContentPane();
+//			pane.add(this.clockPanel, BorderLayout.NORTH);
+//			pane.add(leftPanel, BorderLayout.WEST);
+//			pane.add(rightPanel, BorderLayout.EAST);
+//			pane.add(this, BorderLayout.CENTER);
+//			pane.add(this.changeLayoutButton, BorderLayout.SOUTH);
+//			this.revalidate();
+//			this.repaint();
+//		}
+//		
+//		
+//		
+//		
+//		// Set background color
+////		setBackground(new Color(200, 200, 200));
+//		
+//		// Enable double buffering of this panel to avoid flickering.
+//		setDoubleBuffered(true);
+//		// Set the focus to the GamePanel for keyboard events to work.
+//		setFocusable(true);
+//		// Start up the game
+//		initGame();
 	}
 
 	void initGame() {
@@ -60,7 +138,7 @@ public class GamePanel extends JPanel implements Commons {
 
 		wall = new Wall[20]; // Create wall object
 		for (int i = 0; i < 20; i++) {
-			wall[i] = new Wall(i * 32, Commons.CLOCK_HEIGHT + Commons.TOP_OPTION_BAR_HEIGHT + 15);
+			wall[i] = new Wall(i * 32, 0);
 		}
 
 		// The paddle's event handlers are registered as event sources.
@@ -210,7 +288,7 @@ public class GamePanel extends JPanel implements Commons {
 		
 			// Draw the wall on the top portion
 			for (Wall w : wall)
-				g2d.drawImage(w.getImage(), w.getX(), w.getY(), w.getWidth(), w.getHeight(), this);
+				g2d.drawImage(w.getImage(), w.getX(), w.getY()+TOP_OPTION_BAR_HEIGHT + 10, w.getWidth(), w.getHeight(), this);
 
 			// Draw the ball
 			g2d.drawImage(ball.getImage(), ball.getX(), ball.getY(), ball.getWidth(), ball.getHeight(), this);
@@ -258,7 +336,8 @@ public class GamePanel extends JPanel implements Commons {
 		 */
 		@Override
 		public void run() {
-			ball.move(); // Update ball's position.
+			if(GameStatus.isGamePaused()==false){
+				ball.move(); // Update ball's position.
 			paddle.move(); // Update the paddle's position.
 
 			// If ball goes below screen, lose game.
@@ -275,6 +354,8 @@ public class GamePanel extends JPanel implements Commons {
 			handleCollisions();
 			// Render objects to panel.
 			repaint();
+			}
+			
 		}
 	}
 

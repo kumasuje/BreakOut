@@ -21,7 +21,7 @@ public class Paddle extends Sprite implements Commons {
     
     public void move() {
         x += dx; // Update regular movement.
-        
+        y = Commons.HEIGHT-100;
         /* Keep paddle in screen.
          * NOTE!
          * The paddle is not completely in the screen: it can go off screen by

@@ -46,7 +46,8 @@ public class ClockPanel extends JPanel implements Commons {
     
 	public void displayTime(int msCounter) {
 		milliSecCounter += msCounter;
-		showTime();
+		if(GameStatus.isGamePaused()==false)
+			showTime();
 	}
 	
 	public void showTime(){
