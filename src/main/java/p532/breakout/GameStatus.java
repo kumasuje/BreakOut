@@ -48,6 +48,13 @@ public class GameStatus {
 	public synchronized static void setGameStarted(boolean gameStarted) {
 		GameStatus.gameStarted = gameStarted;
 	}
+	public synchronized static boolean isLayoutChanged() {
+		return gameLayoutChanged;
+	}
+
+	public synchronized static void setLayoutChanged(boolean gameLayoutChanged) {
+		GameStatus.gameLayoutChanged = gameLayoutChanged;
+	}
 
 	private static boolean gameOver = false;
 	private static boolean gamePaused = false;
@@ -58,6 +65,8 @@ public class GameStatus {
 	private static boolean gameReplay = false;
 	private static boolean gameFlowLayout = true;
 	private static boolean gameBorderLayout = false;
+	private static boolean gameLayoutChanged = false;
+	
 	
 	public static synchronized boolean isExitGame() {
 		return exitGame;

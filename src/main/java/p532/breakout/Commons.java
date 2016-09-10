@@ -8,7 +8,7 @@ import java.io.File;
 public interface Commons {
     
 	public static final int WIDTH = 620;
-    public static final int HEIGHT = 800;
+    public static final int HEIGHT = 900;
     public static final int TOP_OPTION_BAR_HEIGHT = 45;
     public static final int VERTICAL_PADDING = 15;
     public static final int CLOCK_HEIGHT = 60;

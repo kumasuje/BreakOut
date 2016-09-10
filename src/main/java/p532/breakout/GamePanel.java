@@ -1,11 +1,16 @@
 package p532.breakout;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.sound.sampled.*;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.RenderingHints;
 import java.util.TimerTask;
 
@@ -16,15 +21,17 @@ import java.util.TimerTask;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Commons {
 	// Variable declaration
+	
 	String message;
 	Ball ball;
 	Paddle paddle;
 	Brick bricks[];
 	Wall wall[];
 	int bricksRemaining;
-	TopOptionBar topBar;
+	
 	
 	ClockPanel clockPanel;
+	
 	
 	public void resetPanel(GamePanel gamePanel){
 		
@@ -33,19 +40,72 @@ public class GamePanel extends JPanel implements Commons {
 		this.bricks = gamePanel.bricks;
 		this.wall 	= gamePanel.wall;
 		this.bricksRemaining = gamePanel.bricksRemaining;
+		
+			
 	}
-
+	
 	public GamePanel(ClockPanel clockPanel) {
 
 		this.clockPanel = clockPanel;
-		this.topBar = new TopOptionBar();
+//		this.startButton = drawLayout.startButton;
+//		this.resetButton = drawLayout.resetButton;
+//		this.undoButton = drawLayout.undoButton;
+//		this.pauseButton= drawLayout.pauseButton;
+//		this.replayButton = drawLayout.replayButton;
+//		this.loadButton = drawLayout.loadButton;
+//		this.saveButton = drawLayout.saveButton;
+//		this.changeLayoutButton = drawLayout.changeLayoutButton;
 		
 		
-		add(this.topBar);
-		add(this.clockPanel);
+//		if(GameStatus.isFlowLayout())
+//		{	
+//			
+			this.add(clockPanel);
+//			setVisible(true);
+////			add(this.startButton);
+////			add(this.resetButton);		
+////			add(this.undoButton);
+////			add(this.replayButton);
+////			add(this.pauseButton);
+////			add(this.loadButton);
+////			add(this.saveButton);
+////			add(this.changeLayoutButton);
+////			this.changeLayoutButton.setVisible(true);
+//			
+//			
+//			
+//			
+//		}
+//		else{
+//			
+//			
+////			JPanel leftPanel =new JPanel(new GridLayout(0,1));
+////			JPanel rightPanel =new JPanel(new GridLayout(0,1));
+////			leftPanel.add(drawLayout.startButton);
+////			leftPanel.add(drawLayout.pauseButton);
+////			leftPanel.add(drawLayout.resetButton);
+////			rightPanel.add(drawLayout.loadButton);
+////			rightPanel.add(drawLayout.saveButton);
+////			rightPanel.add(drawLayout.undoButton);
+////			rightPanel.add(drawLayout.replayButton);
+////			
+//			Container pane= Driver.gameFrame.getContentPane();
+//			pane.add(clockPanel, BorderLayout.NORTH);
+//			pane.setVisible(true);
+////			pane.add(leftPanel, BorderLayout.WEST);
+////			pane.add(rightPanel, BorderLayout.EAST);
+////			pane.add(this, BorderLayout.CENTER);
+////			pane.add(drawLayout.changeLayoutButton, BorderLayout.SOUTH);
+////			
+//			
+//		}
+//		
+		
+		
+		
 		// Set background color
-		setBackground(new Color(200, 200, 200));
-
+//		setBackground(new Color(200, 200, 200));
+		
 		// Enable double buffering of this panel to avoid flickering.
 		setDoubleBuffered(true);
 		// Set the focus to the GamePanel for keyboard events to work.
@@ -60,7 +120,7 @@ public class GamePanel extends JPanel implements Commons {
 
 		wall = new Wall[20]; // Create wall object
 		for (int i = 0; i < 20; i++) {
-			wall[i] = new Wall(i * 32, Commons.CLOCK_HEIGHT + Commons.TOP_OPTION_BAR_HEIGHT + 15);
+			wall[i] = new Wall(i * 32, 0);
 		}
 
 		// The paddle's event handlers are registered as event sources.

@@ -1,11 +1,19 @@
 package p532.breakout;
 
+import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Dimension;
 
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import org.omg.PortableServer.ServantRetentionPolicyValue;
 
 
 /**
@@ -16,33 +24,97 @@ import javax.swing.JFrame;
 
 public class Driver {
 
+	static JFrame gameFrame;
+	static Container pane;
 	public void startGame() {
 
 		ArrayList<GamePanel> undoStack = new ArrayList<GamePanel>();
 		ArrayList<GamePanel> replayStack = new ArrayList<GamePanel>();
-		JFrame gameFrame = new JFrame("Demo ");
-
-		GamePanel gamePanel = new GamePanel(new ClockPanel());
+		
+		gameFrame = new JFrame("Demo");
+		
+		
+		FlowLayout flowLayout;
+		BorderLayout borderLayout;
+		
+		DrawLayout drawLayout = new DrawLayout();
+		//ChangeLayoutCommand clc = new ChangeLayoutCommand(gameFrame, drawLayout);
+		
+		GamePanel gamePanel= new GamePanel(new ClockPanel());
 		gamePanel.setPreferredSize(new Dimension(Commons.WIDTH, Commons.HEIGHT));
-		TimerPerSecObservable timerObservable = new TimerPerSecObservable(gamePanel);
-
-		Game game = new Game(undoStack, replayStack,gameFrame, timerObservable);
-
-		game.register(gamePanel);
-		FlowLayout layout = new FlowLayout();
-		layout.setHgap(10);
-		layout.setVgap(10);
-		gameFrame.setLayout(layout);
-		gameFrame.add(gamePanel);
+		
+		
+		if(GameStatus.isFlowLayout())
+		{
+			borderLayout=null;
+			flowLayout=new FlowLayout();
+			flowLayout.setHgap(10);
+			flowLayout.setVgap(10);
+			gameFrame.setLayout(flowLayout);
+			JPanel mainPanel = new JPanel();
+			gameFrame.add(mainPanel);
+			gameFrame.add(gamePanel);
+//			gameFrame.add(gamePanel.clockPanel);
+			mainPanel.add(drawLayout.startButton);
+			mainPanel.add(drawLayout.resetButton);		
+			mainPanel.add(drawLayout.undoButton);
+			mainPanel.add(drawLayout.replayButton);
+			mainPanel.add(drawLayout.pauseButton);
+			mainPanel.add(drawLayout.loadButton);
+			mainPanel.add(drawLayout.saveButton);
+			mainPanel.add(drawLayout.changeLayoutButton);
+			mainPanel.setVisible(true);
+		}
+		else
+		{
+			flowLayout = null;
+			borderLayout=new BorderLayout();
+			borderLayout.setHgap(10);
+			borderLayout.setVgap(10);
+			gameFrame.setLayout(borderLayout);
+			JPanel leftPanel =new JPanel(new GridLayout(0,1));
+			JPanel rightPanel =new JPanel(new GridLayout(0,1));
+			leftPanel.add(drawLayout.startButton);
+			leftPanel.add(drawLayout.pauseButton);
+			leftPanel.add(drawLayout.resetButton);
+			rightPanel.add(drawLayout.loadButton);
+			rightPanel.add(drawLayout.saveButton);
+			rightPanel.add(drawLayout.undoButton);
+			rightPanel.add(drawLayout.replayButton);
+			
+			Container pane= Driver.gameFrame.getContentPane();
+//			pane.add(gamePanel.clockPanel, BorderLayout.NORTH);
+			pane.add(leftPanel, BorderLayout.WEST);
+			pane.add(rightPanel, BorderLayout.EAST);
+			pane.add(gamePanel, BorderLayout.CENTER);
+			pane.add(drawLayout.changeLayoutButton, BorderLayout.SOUTH);
+			
+			
+		}
+		
+		
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		gameFrame.setSize(Commons.WIDTH, Commons.HEIGHT + 80);
+		gameFrame.setSize(Commons.WIDTH, Commons.HEIGHT);
 		gameFrame.setResizable(false);
 		gameFrame.setIgnoreRepaint(true);
+		
+		gameFrame.revalidate();
+		gameFrame.pack();
 		gameFrame.setVisible(true);
-
+		
+		
+		
+		TimerPerSecObservable timerObservable = new TimerPerSecObservable(gamePanel);
+		
+		Game game= new Game(undoStack, replayStack,gameFrame, timerObservable);
+		game.register(gamePanel);
+		
+		
+		
 		GamePanel resetPosition = new GameState(gamePanel).getCurentState();
 		StartCommand gameScreen = new StartCommand(game);
 		gameScreen.performAMove();
+		
 		while ( true) {
 		
 			if (GameStatus.isGameStarted() && !GameStatus.isGameStopped()) {
@@ -59,11 +131,20 @@ public class Driver {
 				UndoCommand newUndoComment = new UndoCommand(game, gamePanel);
 				newUndoComment.performAMove();
 				
-			}  if (GameStatus.isGameReplay()){
+			} 
+			if (GameStatus.isGameReplay()){
 								
 				ReplayCommand newreplayComment = new ReplayCommand(game,gamePanel);
 				newreplayComment.performAMove();
 			}
+			
+			if (GameStatus.isLayoutChanged()){
+				
+				ChangeLayoutCommand newLayoutComment = new ChangeLayoutCommand(game, gameFrame, drawLayout);
+				newLayoutComment.performAMove();
+			
+			}
 		}
 	}
+
 }

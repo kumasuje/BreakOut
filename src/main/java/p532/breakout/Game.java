@@ -1,9 +1,15 @@
 package p532.breakout;
 
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * @author sujeet The main window, acts as the main entry point.
@@ -78,5 +84,78 @@ public class Game {
 			this.timerObservable.replayMove(replayStack);
 		}
 		GameStatus.setGameReplay(false);
+	}
+	
+	public void changeLayoutGame(JFrame gameFrame, DrawLayout drawLayout) {
+		FlowLayout flowLayout;
+		BorderLayout borderLayout;
+		GamePanel gamePanel= new GamePanel(new ClockPanel());
+		gamePanel.setPreferredSize(new Dimension(Commons.WIDTH, Commons.HEIGHT));
+		
+		
+		if(GameStatus.isFlowLayout())
+		{
+			borderLayout=null;
+			flowLayout=new FlowLayout();
+//			gameFrame.setLayout(flowLayout);
+////			gameFrame.add(gamePanel.clockPanel);
+//			gameFrame.add(drawLayout.startButton);
+//			gameFrame.add(drawLayout.resetButton);		
+//			gameFrame.add(drawLayout.undoButton);
+//			gameFrame.add(drawLayout.replayButton);
+//			gameFrame.add(drawLayout.pauseButton);
+//			gameFrame.add(drawLayout.loadButton);
+//			gameFrame.add(drawLayout.saveButton);
+//			gameFrame.add(drawLayout.changeLayoutButton);
+//			gameFrame.add(gamePanel);
+
+
+			gameFrame.setLayout(flowLayout);
+			JPanel mainPanel = new JPanel();
+			gameFrame.add(mainPanel);
+//			gameFrame.add(gamePanel.clockPanel);
+			mainPanel.add(drawLayout.startButton);
+			mainPanel.add(drawLayout.resetButton);		
+			mainPanel.add(drawLayout.undoButton);
+			mainPanel.add(drawLayout.replayButton);
+			mainPanel.add(drawLayout.pauseButton);
+			mainPanel.add(drawLayout.loadButton);
+			mainPanel.add(drawLayout.saveButton);
+			mainPanel.add(drawLayout.changeLayoutButton);
+			mainPanel.revalidate();
+			mainPanel.setVisible(true);
+		}
+		else
+		{
+			flowLayout=null;
+			borderLayout=new BorderLayout();
+			gameFrame.setLayout(borderLayout);
+			JPanel leftPanel =new JPanel(new GridLayout(0,1));
+			JPanel rightPanel =new JPanel(new GridLayout(0,1));
+			leftPanel.add(drawLayout.startButton);
+			leftPanel.add(drawLayout.pauseButton);
+			leftPanel.add(drawLayout.resetButton);
+			rightPanel.add(drawLayout.loadButton);
+			rightPanel.add(drawLayout.saveButton);
+			rightPanel.add(drawLayout.undoButton);
+			rightPanel.add(drawLayout.replayButton);
+			
+			Container pane= Driver.gameFrame.getContentPane();
+			pane.add(gamePanel.clockPanel, BorderLayout.NORTH);
+			pane.add(leftPanel, BorderLayout.WEST);
+			pane.add(rightPanel, BorderLayout.EAST);
+			pane.add(gamePanel, BorderLayout.CENTER);
+			pane.add(drawLayout.changeLayoutButton, BorderLayout.SOUTH);
+			
+		}
+		
+		
+		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gameFrame.setSize(Commons.WIDTH, Commons.HEIGHT);
+		gameFrame.setResizable(false);
+		gameFrame.setIgnoreRepaint(true);
+		gameFrame.validate();
+		gameFrame.repaint();
+		gameFrame.setVisible(true);
 	}
 }

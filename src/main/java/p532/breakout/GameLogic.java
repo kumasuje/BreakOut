@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 
+import javax.swing.JFrame;
+
 class GameLogic extends TimerTask {
     /* This is where the game loop logic goes. Here, the objects are
      * updated and then drawn to the panel.
@@ -57,11 +59,12 @@ class GameLogic extends TimerTask {
 
             gamePanel.handleCollisions();
             if(GameStatus.isGamePaused() == false)
-            	gamePanel.repaint();
+            gamePanel.repaint();
 //        }else{
 //        	
 //        	GameStatus.something();
 //        }
+           
 
         latch.countDown();
     	
